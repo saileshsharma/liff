@@ -42,7 +42,8 @@
         function getUserProfile() {
             liff.getProfile()
                 .then(profile => {
-                    document.getElementById('display-name').textContent = profile.displayName;
+                    document.getElementById('display-name').textContent = profile.displayName + profile.uid;
+                    
                     document.getElementById('profile-picture').src = profile.pictureUrl;
                     document.getElementById('user-info').style.display = 'block';
                     document.getElementById('login-button').style.display = 'none';
