@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My LIFF App</title>
+    <script src="https://d.line-scdn.net/liff/edge/2.1/sdk.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to Sailesh My LIFF App!</h1>
+    <button id="login-button">Login with LINE</button>
+    <div id="user-info" style="display: none;">
+        <h2>Hello, <span id="display-name"></span>!</h2>
+        <img id="profile-picture" src="" alt="Profile Picture" />
+    </div>
+
+    <script>
+        // Initialize LIFF
+        liff.init({ liffId: '2006241397-QpdkzwMR' })
+            .then(() => {
+                if (!liff.isLoggedIn()) {
+                    document.getElementById('login-button').style.display = 'block';
+                } else {
+                    getUserProfile();
+                }
+            })
+            .catch(err => console.error(err));
+
+        // Login function
+        document.getElementById('login-button').addEventListener('click', () => {
+            liff.login();
+        });
+
+        // Get user profile
+        function getUserProfile() {
+            liff.getProfile()
+                .then(profile => {
+                    document.getElementById('display-name').textContent = profile.displayName;
+                    document.getElementById('profile-picture').src = profile.pictureUrl;
+                    document.getElementById('user-info').style.display = 'block';
+                    document.getElementById('login-button').style.display = 'none';
+                })
+                .catch(err => console.error(err));
+        }
+    </script>
+</body>
+</html>
